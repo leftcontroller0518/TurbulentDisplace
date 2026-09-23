@@ -1,7 +1,7 @@
 # タービュレントディスプレイス（Turbulent Displace）
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](#)
 [![.NET](https://img.shields.io/badge/.NET-10.0-blue.svg)](#)
-
+[![Downloads](https://img.shields.io/github/downloads/leftcontroller0518/TurbulentDisplace/total)](https://github.com/leftcontroller0518/TurbulentDisplace/releases/latest)
 
 YMM4用の映像エフェクトプラグインです。Improved Perlin NoiseとfBM（Fractal Brownian Motion）を使用して、映像を水面や熱気のように不規則に歪ませます。Direct2Dピクセルシェーダーで処理するため、フレームごとにアニメーションさせることもできます。
 
