@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "TurbulentDisplace": {
+      "commandName": "Project"
+    },
+    "YMM4": {
+      "commandName": "Executable",
+      "executablePath": "C:\\YMM4\\YukkuriMovieMaker.exe"
+    }
+  }
+}

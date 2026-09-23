@@ -1,0 +1,87 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Platforms>x64</Platforms>
+    <PlatformTarget>x64</PlatformTarget>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>false</SelfContained>
+    <AssemblyName>TurbulentDisplace</AssemblyName>
+    <RootNamespace>TurbulentDisplace</RootNamespace>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="YukkuriMovieMaker.Plugin">
+      <HintPath>$(YMM4DirPath)YukkuriMovieMaker.Plugin.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="YukkuriMovieMaker.Controls">
+      <HintPath>$(YMM4DirPath)YukkuriMovieMaker.Controls.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Vortice.Direct2D1">
+      <HintPath>$(YMM4DirPath)Vortice.Direct2D1.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Vortice.Direct3D11">
+      <HintPath>$(YMM4DirPath)Vortice.Direct3D11.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Vortice.DXGI">
+      <HintPath>$(YMM4DirPath)Vortice.DXGI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Vortice.DirectX">
+      <HintPath>$(YMM4DirPath)Vortice.DirectX.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Vortice.Mathematics">
+      <HintPath>$(YMM4DirPath)Vortice.Mathematics.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SharpGen.Runtime">
+      <HintPath>$(YMM4DirPath)SharpGen.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SharpGen.Runtime.COM">
+      <HintPath>$(YMM4DirPath)SharpGen.Runtime.COM.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- HLSL: fxc.exe で ps_5_0 として .cso を生成し、WPF リソースとして埋め込む -->
+  <ItemGroup>
+    <HlslShader Include="Shaders\TurbulentDisplace.hlsl" />
+    <Resource Include="Shaders\TurbulentDisplace.cso" />
+  </ItemGroup>
+
+  <Target Name="CompileTurbulentDisplaceShader"
+          BeforeTargets="BeforeBuild"
+          Inputs="@(HlslShader)"
+          Outputs="$(MSBuildProjectDirectory)\Shaders\TurbulentDisplace.cso">
+    <PropertyGroup>
+      <_ShaderSource>$(MSBuildProjectDirectory)\Shaders\TurbulentDisplace.hlsl</_ShaderSource>
+      <_ShaderOutput>$(MSBuildProjectDirectory)\Shaders\TurbulentDisplace.cso</_ShaderOutput>
+      <_FxcPath>C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\fxc.exe</_FxcPath>
+      <_D2DIncludePath>C:\Program Files (x86)\Windows Kits\10\Include\10.0.26100.0\um</_D2DIncludePath>
+    </PropertyGroup>
+    <Error Text="fxc.exe が見つかりません: $(_FxcPath)" Condition="!Exists('$(_FxcPath)')" />
+    <Error Text="d2d1effecthelpers.hlsli が見つかりません: $(_D2DIncludePath)" Condition="!Exists('$(_D2DIncludePath)\d2d1effecthelpers.hlsli')" />
+    <Exec Command="&quot;$(_FxcPath)&quot; /nologo /I &quot;$(_D2DIncludePath)&quot; /T ps_5_0 /E main /Fo &quot;$(_ShaderOutput)&quot; &quot;$(_ShaderSource)&quot;" />
+  </Target>
+
+  <Target Name="DeployToYmm4Plugin" AfterTargets="Build" Condition="Exists('$(YMM4DirPath)')">
+    <MakeDir Directories="$(YMM4DirPath)user\plugin\TurbulentDisplace\" Condition="!Exists('$(YMM4DirPath)user\plugin\TurbulentDisplace\')" />
+    <Copy SourceFiles="$(TargetDir)TurbulentDisplace.dll" DestinationFolder="$(YMM4DirPath)user\plugin\TurbulentDisplace\" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>
