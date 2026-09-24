@@ -77,7 +77,7 @@ YMM4のDirect2D描画では、映像が複数のタイルに分割されてシ�
 - Issuesも大歓迎です。
 
 ## バグについて
-- バグについては私左コントローラーの[X(旧Twitter)](https://x.com/aoihou0518)DM、またはIssuesへどうぞ
+- バグについては私左コントローラーの[X(旧Twitter)](https://x.com/aoihou0518)のDM、またはIssuesへどうぞ
 
 ## changelog
 2026/09/23 v1.0.0 公開
