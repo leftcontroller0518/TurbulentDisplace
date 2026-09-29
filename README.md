@@ -1,4 +1,4 @@
-# タービュレントディスプレイス（Turbulent Displace）
+# タービュレントディスプレイス
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](#)
 [![.NET](https://img.shields.io/badge/.NET-10.0-blue.svg)](#)
 [![Downloads](https://img.shields.io/github/downloads/leftcontroller0518/TurbulentDisplace/total)](https://github.com/leftcontroller0518/TurbulentDisplace/releases/latest)
